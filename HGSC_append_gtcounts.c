@@ -22,7 +22,6 @@
 int nsamples;
 bcf_hdr_t *header;
 char *filter_strings[] = {"PASS", "FAIL", "NVAR", "NDAT", "NFLT"};
-//char *genotype_strings[] = {"..", ".0", ".1", ".2", ".3", "00", "01", "02", "03", "11", "12", "13", "22", "23", "33"};
 char *genotype_strings[] = {".", "0", "1", "2", "3"};
 
 
@@ -31,7 +30,8 @@ char *genotype_strings[] = {".", "0", "1", "2", "3"};
  *     */
 const char *about(void)
 {
-    return "Add INFO subfields with counts of various FT and GT combinations.\n";
+    return "Add INFO subfields with counts of various FT and GT combinations.\n"
+           "Be warned that this assumes SNPs! This plugin won't work if there are more than 4 alleles in one row.\n";
 }
 
 /*

@@ -85,7 +85,7 @@ bcf1_t *process(bcf1_t *rec)
     int var_hom_fail = 0;
     int var_ref_fail = 0;
     int var_miss = 0;
-    bool is_monomorphic = false;  // all genotypes 1/1
+    bool is_monomorphic = false;  // all non-'.' alleles are '1'
 
     size_t i;
     for (i = 0; i < MAX_ALLELES; i++)

@@ -18,7 +18,7 @@ typedef struct
     int missing;  // ./., ./0, 1/., etc.
     int transitions;
     int transversions;
-    long total_coverage;  // divide this by num_sites sites to get average coverage
+    long total_coverage;  // divide this by genotypes_with_depth sites to get average coverage
 } bucket_t;
 
 typedef struct
