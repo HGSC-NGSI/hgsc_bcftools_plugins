@@ -1,6 +1,9 @@
 ## Filtering and Formatting
 
+This document describes some typical post-processing we might perform on VCF files. BCFtools is fast, requires strict and consistent formatting, and gives us a nice interface to write our own small C plugins for interacting with VCFs, so we make frequent use of it.
+
 Requires BCFtools 1.6.
+
 Make sure plugins environment variable is set:
 
 ```
@@ -58,7 +61,8 @@ If the count for any of these combinations of filter and genotype is
 nonzero, the INFO field will be updated to include the counts for that
 combination.
 
-**BEWARE!** This plugin assumes SNPs (i.e., it assumes only 4 possible alleles)! It will die if there is a row in the input VCF with 5 or more alleles.
+#### **BEWARE!** 
+The HGSC_append_gtcounts plugin assumes SNPs (i.e., it assumes only 4 possible alleles)! It will die if there is a row in the input VCF with 5 or more alleles.
 
 ### 3. Sample Renaming
 
@@ -66,10 +70,12 @@ combination.
 bcftools reheader -h $PATH_TO_HEADER filtered_summarized.vcf > filtered_summarized_reheadered.vcf
 ```
 
+We frequently need to rename samples at some point to match other components of a dataset.
+
 Just take the old header and replace the sample names with what they
 should be (in the order of the original sample names).
 
-We also added descriptions of filters to the header in this step:
+We also add descriptions of filters to the header in this step if they aren't already there:
 
 ```
 ##FILTER=<ID=low_snpqual,Description="SNP posterior probability is less than 0.50">
