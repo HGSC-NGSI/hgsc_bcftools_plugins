@@ -5,7 +5,7 @@
 //len(PASS, FAIL, NVAR, NDAT, NFLT) = 5
 #define NUM_FILTER_STRINGS 5
 //similarly for genotypes
-#define NUM_GT_STRINGS 5
+#define NUM_GT_STRINGS 6
 
 #define INDEX_PASS 0
 #define INDEX_FAIL 1
@@ -18,11 +18,16 @@
 #define INDEX_1 2
 #define INDEX_2 3
 #define INDEX_3 4
+#define INDEX_N 5
 
 int nsamples;
 bcf_hdr_t *header;
 char *filter_strings[] = {"PASS", "FAIL", "NVAR", "NDAT", "NFLT"};
-char *genotype_strings[] = {".", "0", "1", "2", "3"};
+char *genotype_strings[] = {".", "0", "1", "2", "3", "N"};  // N represents any other non-missing allele. We chose to
+                                                            // implement this way in order to be able to put all tags in
+                                                            // header without knowing the max number of alleles ahead of
+                                                            // time, understanding that situations where there are more
+                                                            // than 4 alleles are pretty rare.
 
 
 /*
@@ -30,6 +35,7 @@ char *genotype_strings[] = {".", "0", "1", "2", "3"};
  *     */
 const char *about(void)
 {
+    // TODO update this to reflect limited indel functionality
     return "Add INFO subfields with counts of various FT and GT combinations.\n"
            "Be warned that this assumes SNPs! This plugin won't work if there are more than 4 alleles in one row.\n";
 }
@@ -141,6 +147,8 @@ bcf1_t *process(bcf1_t *rec)
             gt1_index = INDEX_2;
         if (all1 == 3)
             gt1_index = INDEX_3;
+        if (all1 > 3)
+            gt1_index = INDEX_N;
         
         if (all2 < 0)
             gt2_index = INDEX_MISS;
@@ -152,6 +160,8 @@ bcf1_t *process(bcf1_t *rec)
             gt2_index = INDEX_2;
         if (all2 == 3)
             gt2_index = INDEX_3;
+        if (all2 > 3)
+            gt2_index = INDEX_N;
 
         buckets[filt_index][gt1_index][gt2_index]++;
     }
