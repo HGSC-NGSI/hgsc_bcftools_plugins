@@ -223,9 +223,9 @@ void destroy(void)
         printf("%d,", samp_buckets[i]->missing);
         printf("%lf,", samp_buckets[i]->het / (double) samp_buckets[i]->var);
         printf("%lf,", samp_buckets[i]->missing / (double) num_sites);
-        printf("%lf", samp_buckets[i]->total_coverage / (double) samp_buckets[i]->genotypes_with_depth);
-        printf("%ld", samp_buckets[i]->total_coverage);
-        printf("%d", samp_buckets[i]->genotypes_with_depth);
+        printf("%lf,", samp_buckets[i]->total_coverage / (double) samp_buckets[i]->genotypes_with_depth);
+        printf("%ld,", samp_buckets[i]->total_coverage);
+        printf("%d,", samp_buckets[i]->genotypes_with_depth);
         printf("\n");
     }
 
