@@ -35,7 +35,7 @@ int init(int argc, char **argv, bcf_hdr_t *in, bcf_hdr_t *out)
     nsnps = nindels = nmnps = nothers = nsites = 0;
     header = in;
    
-    if (argc < 2)
+    if (argc < 1)
     {
         printf("%s", about());
         exit(1);
@@ -43,7 +43,7 @@ int init(int argc, char **argv, bcf_hdr_t *in, bcf_hdr_t *out)
 
     char *endptr;
     errno = 0;
-    min_depth = (int) strtol(argv[1], &endptr, 10); 
+    min_depth = (int) strtol(argv[argc - 1], &endptr, 10); 
     if (errno != 0 || argv[1] == endptr)
     {
         printf("Invalid input.\n");
